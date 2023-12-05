@@ -77,6 +77,7 @@ export default {
 
     sendMessage(message) {
       let roomId = this.chatOpenData.id;
+      console.log("room", roomId);
 
       let obj = {
         id: this.usuarioLogado.id,
@@ -90,6 +91,12 @@ export default {
       this.socket.emit("send-message", obj, roomId);
     },
 
+    listenMessages() {
+      this.socket.on("recieved-message", (messageObj) => {
+        console.log("recebido", messageObj);
+      });
+    },
+
     setSocket() {
       if (this.usuarioLogado !== null) {
         this.socket = io("http://localhost:3000");
@@ -97,6 +104,8 @@ export default {
           // console.log("you are connected with id", this.socket.id);
           this.socket.emit("join-room", this.usuarioLogado.id);
         });
+
+        this.listenMessages();
       }
     },
   },

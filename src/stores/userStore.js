@@ -5,21 +5,22 @@ export const useUserStore = defineStore("user", {
     user: null, // usuário logado
     users: [
       { id: "sodu-340s", userName: "zi" },
-      { id: "x2302-sa", userName: "zaaran" },
+      { id: "x2302-sau", userName: "zaaran" },
     ], // usuários no sistema
     chats: [
-      { id: "x-2302-", userName: "zaaran", viewd: true },
+      { id: "x2302-sau", userName: "zaaran", viewd: true },
       { id: "sodu-340s", userName: "zi", viewd: false },
     ],
     history: [
       {
-        id: "x-2302-",
+        id: "x2302-sau",
         userName: "zaaran",
-        messages: [
-          { userName: "zaaran", text: "eae parsaaaa" },
-          { userName: "zaaran", text: "como ce ta" },
-          { userName: "zi", text: "waeieji manoooo" },
-        ],
+        messages: [],
+      },
+      {
+        id: "sodu-340s",
+        userName: "zi",
+        messages: [],
       },
     ],
   }),

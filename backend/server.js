@@ -13,6 +13,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send-message", (messageObj, roomid) => {
-    console.log("mensagem recebida", messageObj.text, "to", roomid);
+    console.log("mensagem recebida", "to", roomid);
+    socket.to(roomid).emit("recieved-message", messageObj);
   });
 });
