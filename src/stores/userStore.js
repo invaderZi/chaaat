@@ -53,7 +53,9 @@ export const useUserStore = defineStore("user", {
       return state.user;
     },
     getAllUsers: (state) => {
-      return state.users;
+      return state.users.filter((user) => {
+        return user.id !== state.user.id;
+      });
     },
     userExists: (state) => (userFind) => {
       return state.users.find((user) => {
