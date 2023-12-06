@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div class="text-center">
+    <div>
       <q-btn
-        color="white"
-        outline
-        text-color="black"
         round
-        size="sm"
+        flat
         icon="arrow_back"
-        class="q-ml-md q-mb-sm q-mt-sm"
+        color="white"
+        text-color="black"
+        size="md"
+        class="q-ml-md q-mb-xs"
         @click="closeUserList"
       />
     </div>

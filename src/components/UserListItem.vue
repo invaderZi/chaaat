@@ -17,8 +17,8 @@
       </q-item-label>
       <q-item-label
         :class="{
-          'text-green': user.online,
-          'text-grey': !user.online,
+          'green-text text-bold': user.online,
+          'text-normal': !user.online,
         }"
         caption
         lines="1"
@@ -37,3 +37,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.green-text {
+  color: darkgreen;
+}
+</style>

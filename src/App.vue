@@ -10,7 +10,10 @@ export default defineComponent({
 });
 </script>
 <style>
+:root {
+  --real-black: #191919;
+}
 body {
-  background-color: lightgrey;
+  background-color: darkgray;
 }
 </style>

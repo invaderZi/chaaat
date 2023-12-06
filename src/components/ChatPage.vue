@@ -8,7 +8,7 @@
       color="white"
       text-color="black"
       size="md"
-      class="q-ml-lg q-mb-sm"
+      class="q-ml-lg"
     ></q-btn>
   </div>
 
@@ -75,11 +75,11 @@ export default {
 .centered-container {
   border: 1px solid whitesmoke;
   border-radius: 20px;
-  max-height: 70vh;
+  max-height: 60vh;
+  width: 80vw;
   overflow: auto;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 30px;
-  width: 90%; /* Adicionando largura total ao container interno */
 }
 .input-container {
   display: flex;

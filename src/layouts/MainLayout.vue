@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header flat style="background-color: black" class="text-center">
+    <q-header flat class="header text-center">
       <q-toolbar>
         <!-- <q-btn
           flat
@@ -104,3 +104,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.header {
+  /* background-color: var(--real-black); */
+  background-color: black;
+}
+</style>
