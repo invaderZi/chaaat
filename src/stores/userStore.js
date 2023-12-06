@@ -4,8 +4,34 @@ export const useUserStore = defineStore("user", {
   state: () => ({
     user: null, // usuário logado
     users: [
-      { id: "sodu-340s", userName: "zi" },
-      { id: "x2302-sau", userName: "zaaran" },
+      {
+        id: "sodu-340s",
+        userName: "zi",
+        userAvatar: null,
+        online: false,
+        status: "uma frase legal",
+      },
+      {
+        id: "x2302-sau",
+        userName: "zaaran",
+        userAvatar: null,
+        online: true,
+        status: "uma frase legal",
+      },
+      {
+        id: "reosj-rts",
+        userName: "joao",
+        userAvatar: null,
+        online: false,
+        status: "uma frase legal",
+      },
+      {
+        id: "eefrt-wws",
+        userName: "maria",
+        userAvatar: null,
+        online: true,
+        status: "uma frase legal",
+      },
     ], // usuários no sistema
     history: [
       {

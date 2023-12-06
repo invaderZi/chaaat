@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>chats</div>
     <q-list separator padding>
       <ChatListItem
         v-for="chat in chats"
@@ -10,7 +9,7 @@
       />
     </q-list>
     <q-btn
-      to="/chat/new"
+      @click="newChat"
       class="fixed-btn"
       round
       icon="add"
@@ -34,6 +33,9 @@ export default {
   methods: {
     openchat(chat) {
       this.$emit("open-chat", chat);
+    },
+    newChat() {
+      this.$emit("new-chat");
     },
   },
 };

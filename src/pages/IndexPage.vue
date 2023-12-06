@@ -1,6 +1,11 @@
 <template>
   <q-page padding class="container">
-    <ChatsList v-if="!showChatWindow" :chats="chats" @open-chat="openChat" />
+    <ChatsList
+      v-if="!showChatWindow && !showUserList"
+      :chats="chats"
+      @open-chat="openChat"
+      @new-chat="newChat"
+    />
     <ChatPage
       v-if="showChatWindow"
       :userLogado="usuarioLogado"
@@ -8,12 +13,19 @@
       @send-message="sendMessage"
       @close-chat="closeChat"
     />
+    <UserList
+      v-if="showUserList"
+      :users="getAllUsers"
+      @newChatUser="newChatUser"
+      @close-user-list="closeUserList"
+    />
   </q-page>
 </template>
 
 <script>
 import ChatPage from "src/components/ChatPage.vue";
 import ChatsList from "../components/ChatsList.vue";
+import UserList from "../components/UserList.vue";
 import { useUserStore } from "../stores/userStore.js";
 import { io } from "socket.io-client";
 
@@ -22,6 +34,7 @@ export default {
   components: {
     ChatsList,
     ChatPage,
+    UserList,
   },
   computed: {
     // computed
@@ -48,6 +61,7 @@ export default {
       chatOpenHistory: {},
       USER_STORE: null,
       socket: null,
+      showUserList: false,
     };
   },
 
@@ -105,12 +119,20 @@ export default {
       if (this.usuarioLogado !== null) {
         this.socket = io("http://localhost:3000");
         this.socket.on("connect", () => {
-          // console.log("you are connected with id", this.socket.id);
           this.socket.emit("join-room", this.usuarioLogado.id);
         });
 
         this.listenMessages();
       }
+    },
+
+    newChat() {
+      this.closeChat();
+      this.showUserList = true;
+    },
+
+    closeUserList() {
+      this.showUserList = false;
     },
   },
 };
