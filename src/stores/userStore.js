@@ -7,19 +7,17 @@ export const useUserStore = defineStore("user", {
       { id: "sodu-340s", userName: "zi" },
       { id: "x2302-sau", userName: "zaaran" },
     ], // usuários no sistema
-    chats: [
-      { id: "x2302-sau", userName: "zaaran", viewd: true },
-      { id: "sodu-340s", userName: "zi", viewd: false },
-    ],
     history: [
       {
         id: "x2302-sau",
         userName: "zaaran",
+        viewd: true,
         messages: [],
       },
       {
         id: "sodu-340s",
         userName: "zi",
+        viewd: true,
         messages: [],
       },
     ],
@@ -37,9 +35,7 @@ export const useUserStore = defineStore("user", {
       });
     },
     getLocalChats: (state) => {
-      return state.chats.filter(
-        (chat) => chat.userName !== state.user.userName
-      );
+      return state.history.filter((chat) => chat.id !== state.user.id);
     },
     getLocalHistory: (state) => (chatFind) => {
       return state.history.find((chat) => {
@@ -61,12 +57,34 @@ export const useUserStore = defineStore("user", {
     saveChatHistory(chat) {
       let index = this.encontrarIndexPorId(chat.id, this.history);
 
-      if (index !== -1) {
-        // Substitui o objeto no array
-        this.history.splice(index, 1, chat);
-      } else {
-        // Se não encontrar, adiciona
+      if (index == -1) {
+        // se nao encontrar cria
         this.history.push(chat);
+      } else {
+        // adiciona
+        this.history.splice(index, 1, chat);
+      }
+    },
+
+    createChatNewObj(messageObj) {
+      let chatHistory = {
+        id: messageObj.id,
+        userName: messageObj.userName,
+        viewd: false,
+        messages: [],
+      };
+      chatHistory.messages.push(messageObj);
+      return chatHistory;
+    },
+
+    saveRecievedMessage(messageObj) {
+      let index = this.encontrarIndexPorId(messageObj.id, this.history);
+      if (index == -1) {
+        let newChat = this.createChatNewObj(messageObj);
+        this.history.push(newChat);
+      } else {
+        this.history[index].messages.push(messageObj);
+        this.history[index].viewd = false;
       }
     },
   },

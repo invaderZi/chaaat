@@ -1,11 +1,12 @@
 <template>
   <q-page padding class="container">
-    <ChatsList v-show="!showChatWindow" :chats="chats" @open-chat="openChat" />
+    <ChatsList v-if="!showChatWindow" :chats="chats" @open-chat="openChat" />
     <ChatPage
-      v-show="showChatWindow"
+      v-if="showChatWindow"
       :userLogado="usuarioLogado"
       :messages="chatOpenHistory.messages ?? []"
       @send-message="sendMessage"
+      @close-chat="closeChat"
     />
   </q-page>
 </template>
@@ -67,9 +68,12 @@ export default {
       this.chatOpenData = chat;
       this.chatOpenHistory = this.USER_STORE.getLocalHistory(chat) ?? {};
       this.showChatWindow = true;
+      this.chatOpenHistory.viewd = true;
+      this.USER_STORE.saveChatHistory(this.chatOpenHistory);
     },
 
     closeChat() {
+      console.log("close");
       this.showChatWindow = false;
       this.chatOpenData = {};
       this.chatOpenHistory = {};
@@ -77,7 +81,6 @@ export default {
 
     sendMessage(message) {
       let roomId = this.chatOpenData.id;
-      console.log("room", roomId);
 
       let obj = {
         id: this.usuarioLogado.id,
@@ -87,13 +90,14 @@ export default {
       };
 
       this.chatOpenHistory.messages.push(obj);
-      // this.USER_STORE.saveChatHistory(this.chatOpenData, this.chatOpenHistory.messages);
+      this.chatOpenHistory.viewd = true;
+      this.USER_STORE.saveChatHistory(this.chatOpenHistory);
       this.socket.emit("send-message", obj, roomId);
     },
 
     listenMessages() {
       this.socket.on("recieved-message", (messageObj) => {
-        console.log("recebido", messageObj);
+        this.USER_STORE.saveRecievedMessage(messageObj);
       });
     },
 
