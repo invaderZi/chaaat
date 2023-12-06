@@ -1,17 +1,17 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header flat style="background-color: black">
+    <q-header flat style="background-color: black" class="text-center">
       <q-toolbar>
-        <q-btn
+        <!-- <q-btn
           flat
           dense
           round
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
-        />
+        /> -->
 
-        <q-toolbar-title> Chat </q-toolbar-title>
+        <q-toolbar-title> chaaat </q-toolbar-title>
 
         <div>v1.0.0</div>
       </q-toolbar>
