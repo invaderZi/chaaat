@@ -12,8 +12,9 @@ io.on("connection", (socket) => {
     console.log(socket.id, "joined on ", roomId);
     if (doesRoomExist(roomId)) {
       if (hasOffilineMessages(roomId)) {
-        io.to(socket.id).emit("offline-send", offlineMessages[roomId]);
-        console.log("offiline send to ", roomId, "on id", socket.id);
+        io.in(roomId).emit("offline-send", offlineMessages[roomId]);
+
+        console.log("offiline send to ", roomId);
       } else {
         console.log("offline not found for", roomId);
       }

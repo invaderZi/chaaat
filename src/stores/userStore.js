@@ -115,5 +115,11 @@ export const useUserStore = defineStore("user", {
         this.history[index].viewd = false;
       }
     },
+
+    updateOfflineHistory(offlineMessagesArray) {
+      offlineMessagesArray.forEach((message) => {
+        this.saveRecievedMessage(message);
+      });
+    },
   },
 });

@@ -135,6 +135,8 @@ export default {
 
     updateHistoryWithOfflineMessages(offlineMessagesArray) {
       console.log("offline recieved");
+      this.USER_STORE.updateOfflineHistory(offlineMessagesArray);
+
       // this.socket.emit("offline-clear", this.usuarioLogado.id);
     },
 
