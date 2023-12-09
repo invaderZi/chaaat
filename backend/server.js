@@ -7,17 +7,24 @@ const io = require("socket.io")(3000, {
 const offlineMessages = {};
 
 io.on("connection", (socket) => {
-  console.log("conected with id", socket.id);
   socket.on("join-room", (roomId) => {
     socket.join(roomId);
-    if (doesRoomExist(roomId) && hasOffilineMessages(roomId)) {
-      socket.to(roomId.emit("recieved-offline", offlineMessages[roomId]));
-    }
-
     console.log(socket.id, "joined on ", roomId);
+    if (doesRoomExist(roomId)) {
+      if (hasOffilineMessages(roomId)) {
+        io.to(socket.id).emit("offline-send", offlineMessages[roomId]);
+        console.log("offiline send to ", roomId, "on id", socket.id);
+      } else {
+        console.log("offline not found for", roomId);
+      }
+    }
   });
 
-  socket.on("offline-recieved", (roomId) => {
+  socket.on("error", (error) => {
+    console.error("Erro no socket:", error);
+  });
+
+  socket.on("offline-clear", (roomId) => {
     clearOfflineMessages(offlineMessages, roomId);
     console.log("clear offiline for", roomId);
   });

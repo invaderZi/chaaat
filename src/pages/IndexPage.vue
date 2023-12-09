@@ -78,6 +78,31 @@ export default {
   },
 
   methods: {
+    setSocket() {
+      if (this.usuarioLogado !== null) {
+        this.socket = io("http://localhost:3000");
+        this.socket.on("connect", () => {
+          this.socket.emit("join-room", this.usuarioLogado.id);
+        });
+
+        this.listenMessages();
+      }
+    },
+
+    listenMessages() {
+      this.socket.on("recieved-message", (messageObj) => {
+        this.USER_STORE.saveRecievedMessage(messageObj);
+      });
+
+      this.socket.on("offline-send", (offlineMessagesArray) => {
+        this.updateHistoryWithOfflineMessages(offlineMessagesArray);
+      });
+
+      this.socket.on("error", (error) => {
+        console.error("Erro na conexao:", error);
+      });
+    },
+
     openChat(chat) {
       this.chatOpenData = chat;
       this.chatOpenHistory = this.USER_STORE.getLocalHistory(chat) ?? {};
@@ -87,7 +112,6 @@ export default {
     },
 
     closeChat() {
-      console.log("close");
       this.showChatWindow = false;
       this.chatOpenData = {};
       this.chatOpenHistory = {};
@@ -109,21 +133,9 @@ export default {
       this.socket.emit("send-message", obj, roomId);
     },
 
-    listenMessages() {
-      this.socket.on("recieved-message", (messageObj) => {
-        this.USER_STORE.saveRecievedMessage(messageObj);
-      });
-    },
-
-    setSocket() {
-      if (this.usuarioLogado !== null) {
-        this.socket = io("http://localhost:3000");
-        this.socket.on("connect", () => {
-          this.socket.emit("join-room", this.usuarioLogado.id);
-        });
-
-        this.listenMessages();
-      }
+    updateHistoryWithOfflineMessages(offlineMessagesArray) {
+      console.log("offline recieved");
+      // this.socket.emit("offline-clear", this.usuarioLogado.id);
     },
 
     newChat() {
