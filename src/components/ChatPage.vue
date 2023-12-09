@@ -21,6 +21,12 @@
           :text="[message.text]"
           :sent="message.userName === userLogado.userName"
           :name="message.userName"
+          :bg-color="
+            message.userName === userLogado.userName ? 'dark' : 'grey-4'
+          "
+          :text-color="
+            message.userName === userLogado.userName ? 'grey-4' : 'black'
+          "
         />
       </q-page>
     </q-page-container>
