@@ -16,7 +16,7 @@
     <UserList
       v-if="showUserList"
       :users="getAllUsers"
-      @newChatUser="newChatUser"
+      @newChatUser="newChatWithSelectedUser"
       @close-user-list="closeUserList"
     />
   </q-page>
@@ -56,7 +56,7 @@ export default {
 
   data() {
     return {
-      chatOpenData: {},
+      // chatOpenData: {},
       showChatWindow: false,
       chatOpenHistory: {},
       USER_STORE: null,
@@ -104,7 +104,7 @@ export default {
     },
 
     openChat(chat) {
-      this.chatOpenData = chat;
+      // this.chatOpenData = chat;
       this.chatOpenHistory = this.USER_STORE.getLocalHistory(chat) ?? {};
       this.showChatWindow = true;
       this.chatOpenHistory.viewd = true;
@@ -113,12 +113,12 @@ export default {
 
     closeChat() {
       this.showChatWindow = false;
-      this.chatOpenData = {};
+      // this.chatOpenData = {};
       this.chatOpenHistory = {};
     },
 
     sendMessage(message) {
-      let roomId = this.chatOpenData.id;
+      let roomId = this.chatOpenHistory.id;
 
       let obj = {
         id: this.usuarioLogado.id,
@@ -147,6 +147,20 @@ export default {
 
     closeUserList() {
       this.showUserList = false;
+    },
+    newChatWithSelectedUser(user) {
+      this.closeChat();
+
+      let chatData = {
+        id: user.id,
+        userName: user.userName,
+        viewd: true,
+        messages: [],
+      };
+      // this.chatOpenData = chatData;
+      this.chatOpenHistory = chatData;
+      this.showChatWindow = true;
+      this.USER_STORE.saveChatHistory(this.chatOpenHistory);
     },
   },
 };
