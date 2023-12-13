@@ -86,7 +86,7 @@ export default {
   border: 1px solid whitesmoke;
   border-radius: 2vw;
   height: 65vh;
-  width: 70vw;
+  width: 80vw;
   overflow: auto;
   margin: 1vh auto;
   padding: 3vw;
@@ -95,13 +95,13 @@ export default {
 .input-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin: 2vh auto;
   padding: 1vh;
-  width: 70vw;
+  width: 80vw;
 }
 
 .input {
-  width: 80vw;
+  width: 85vw;
 }
 </style>

@@ -11,9 +11,11 @@
           @click="toggleLeftDrawer"
         /> -->
 
-        <q-toolbar-title> zeen </q-toolbar-title>
+        <q-toolbar-title>
+          <span class="font-weight-500">zeen</span>
+        </q-toolbar-title>
 
-        <div>v1.0.0</div>
+        <div><span class="font-weight-100">v1.0.0</span></div>
       </q-toolbar>
     </q-header>
 
