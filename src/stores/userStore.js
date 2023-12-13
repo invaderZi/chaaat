@@ -121,5 +121,9 @@ export const useUserStore = defineStore("user", {
         this.saveRecievedMessage(message);
       });
     },
+
+    logout() {
+      this.user = null;
+    },
   },
 });

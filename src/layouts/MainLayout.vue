@@ -15,7 +15,17 @@
           <span class="font-weight-500">zeen</span>
         </q-toolbar-title>
 
-        <div><span class="font-weight-100">v1.0.0</span></div>
+        <div>
+          <span class="font-weight-100">v1.0.0</span>
+          <q-btn
+            icon="logout"
+            @click="logout"
+            flat
+            color="black"
+            text-color="white"
+            rounded
+          ></q-btn>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -40,6 +50,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
+import { useUserStore } from "../stores/userStore.js";
 
 const linksList = [
   {
@@ -103,6 +114,14 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
     };
+  },
+
+  methods: {
+    logout() {
+      const USER_STORE = useUserStore();
+      USER_STORE.logout;
+      this.$router.push("/login");
+    },
   },
 });
 </script>
