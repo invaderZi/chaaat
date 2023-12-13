@@ -9,6 +9,11 @@ const routes = [
   },
 
   {
+    path: "/chatother",
+    component: () => import("components/otherchatpage.vue"),
+  },
+
+  {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [

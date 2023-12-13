@@ -1,35 +1,30 @@
 <template>
   <div>
-    <q-btn
-      @click="closeChat"
-      round
-      flat
-      icon="arrow_back"
-      color="white"
-      text-color="black"
-      size="md"
-      class="q-ml-lg"
-    ></q-btn>
-  </div>
-
-  <div class="container">
-    <q-page-container class="centered-container">
-      <q-page padding>
-        <q-chat-message
-          v-for="message in messages"
-          :key="message.text"
-          :text="[message.text]"
-          :sent="message.userName === userLogado.userName"
-          :name="message.userName"
-          :bg-color="
-            message.userName === userLogado.userName ? 'dark' : 'grey-4'
-          "
-          :text-color="
-            message.userName === userLogado.userName ? 'grey-4' : 'black'
-          "
-        />
-      </q-page>
-    </q-page-container>
+    <div>
+      <q-btn
+        @click="closeChat"
+        roud
+        flat
+        icon="arrow_back"
+        color="white"
+        text-color="black"
+        size="md"
+        class="q-ml-lg"
+      />
+    </div>
+    <div ref="messageContainer" class="centered-container">
+      <q-chat-message
+        v-for="message in messages"
+        :key="message.text"
+        :text="[message.text]"
+        :sent="message.userName === userLogado.userName"
+        :name="message.userName"
+        :bg-color="message.userName === userLogado.userName ? 'dark' : 'grey-4'"
+        :text-color="
+          message.userName === userLogado.userName ? 'grey-4' : 'black'
+        "
+      />
+    </div>
 
     <div class="input-container">
       <q-input
@@ -37,16 +32,9 @@
         @keyup.enter="sendMessage"
         placeholder="Digite sua mensagem"
         outlined
-        class="q-mr-md input"
+        class="q-mr-sm input"
       />
-      <q-btn
-        round
-        flat
-        size="sm"
-        color="black"
-        icon="send"
-        @click="sendMessage"
-      />
+      <q-btn flat size="sm" color="black" icon="send" @click="sendMessage" />
     </div>
   </div>
 </template>
@@ -54,15 +42,36 @@
 <script>
 export default {
   props: ["messages", "userLogado"],
+  computed: {
+    isMessagesDisplayOnLimit() {
+      return this.messages && this.messages.length > 3;
+    },
+  },
   data() {
     return {
       newMessage: "",
     };
   },
+  mounted() {
+    if (this.isMessagesDisplayOnLimit) {
+      this.scrollToBottom();
+    }
+  },
   methods: {
     sendMessage() {
-      this.$emit("send-message", this.newMessage);
-      this.newMessage = "";
+      if (this.newMessage.trim().length > 0) {
+        this.$emit("send-message", this.newMessage.trim());
+        this.newMessage = "";
+        this.$nextTick(() => {
+          if (this.isMessagesDisplayOnLimit) {
+            this.scrollToBottom();
+          }
+        });
+      }
+    },
+    scrollToBottom() {
+      const container = this.$refs.messageContainer;
+      container.scrollTop = container.scrollHeight;
     },
     closeChat() {
       this.$emit("close-chat");
@@ -71,31 +80,28 @@ export default {
   },
 };
 </script>
-<style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* Removendo overflow desnecessário na página */
-}
 
+<style scoped>
 .centered-container {
   border: 1px solid whitesmoke;
-  border-radius: 20px;
-  max-height: 60vh;
-  width: 80vw;
+  border-radius: 2vw;
+  height: 65vh;
+  width: 70vw;
   overflow: auto;
-  margin: 10px auto;
-  padding: 30px;
+  margin: 1vh auto;
+  padding: 3vw;
 }
+
 .input-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin: 10px 30px;
-  padding: 10px;
+  justify-content: space-between;
+  margin: 2vh auto;
+  padding: 1vh;
+  width: 70vw;
 }
 
 .input {
-  width: 70%;
+  width: 80vw;
 }
 </style>
