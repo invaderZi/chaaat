@@ -33,6 +33,8 @@
         placeholder="Digite sua mensagem"
         outlined
         class="q-mr-sm input"
+        color="grey-10"
+        outilined
       />
       <q-btn flat size="sm" color="black" icon="send" @click="sendMessage" />
     </div>
